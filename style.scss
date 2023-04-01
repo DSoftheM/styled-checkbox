@@ -1,0 +1,203 @@
+* {
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    box-sizing: border-box;
+}
+body {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr 1fr;
+    font-family: sans-serif;
+    gap: 20px;
+}
+
+.active,
+.disabled {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.active {
+    justify-self: end;
+}
+.disabled {
+    justify-self: start;
+}
+@media (max-width: 700px) {
+    body {
+        grid-template-columns: 1fr;
+    }
+    .active {
+        justify-self: center;
+    }
+    .disabled {
+        justify-self: center;
+    }
+}
+input {
+    display: none;
+}
+input:disabled + label {
+    pointer-events: none;
+    opacity: 0.3;
+}
+label {
+    cursor: pointer;
+}
+img {
+    vertical-align: top;
+}
+.checkbox-1 {
+    label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .box {
+        border: 1px solid #6563ff;
+        transition: all 0.2s ease 0s;
+    }
+    .box:active {
+        transform: scale(0.8);
+    }
+    .box img {
+        transition: all 0.1s ease 0s;
+        opacity: 0;
+        width: 20px;
+        height: 20px;
+    }
+    input:checked + label .box img {
+        opacity: 1;
+    }
+}
+
+.checkbox-2 {
+    $height: 20px;
+    $width: 40px;
+
+    label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .box {
+        position: relative;
+        outline: 1px solid #6563ff;
+        width: $width;
+        height: $height;
+        border-radius: 10px;
+        transition: all 0.3s ease 0s;
+    }
+    .box::before {
+        transition: all 0.3s ease 0s;
+        content: "";
+        position: absolute;
+        left: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 50%;
+        width: calc($height - 4px);
+        height: calc($height - 4px);
+        background-color: #6563ff;
+    }
+    input:checked + label .box {
+        background-color: rgb(183, 243, 203);
+    }
+    input:checked + label .box::before {
+        left: 100%;
+        transform: translate(calc(-100% - 2px), -50%);
+    }
+}
+
+.checkbox-3 {
+    label {
+        position: relative;
+        border: 1px solid #000;
+        padding: 10px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 150px;
+    }
+    label:before {
+        position: absolute;
+        transition: all 0.3s ease 0s;
+        border-radius: 50%;
+        left: 50%;
+        top: 50%;
+        width: 105%;
+        aspect-ratio: 1/ 1;
+        z-index: -1;
+        content: "";
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+        background-color: #9a98f8;
+    }
+    .box {
+        border: 1px solid #6563ff;
+        img {
+            transition: all 0.3s ease 0s;
+            height: 30px;
+            opacity: 0;
+        }
+    }
+    input:checked + label:before {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    input:checked + label {
+        color: white;
+        img {
+            opacity: 1;
+        }
+    }
+}
+
+.checkbox-4 {
+    #lines {
+        stroke-dasharray: 9.5;
+        stroke-dashoffset: 9.5;
+        position: absolute;
+        left: 100%;
+        transform: translate(-50%, 0) rotate(45deg);
+        transform-origin: 50% 100%;
+        bottom: 100%;
+    }
+    #mark {
+        stroke-dasharray: 19;
+        stroke-dashoffset: -19;
+    }
+    label {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+    input {
+        display: none;
+    }
+    input:checked + label #mark {
+        animation: svgAnim2 0.5s ease 0s 1 forwards;
+    }
+    input:checked + label #lines {
+        animation: svgAnim1 0.5s ease 0.25s 1 forwards;
+    }
+    .box {
+        border: 1px solid #000;
+    }
+    .box__content {
+        padding: 0 2px;
+    }
+    @keyframes svgAnim1 {
+        100% {
+            stroke-dashoffset: -9.5;
+        }
+    }
+    @keyframes svgAnim2 {
+        100% {
+            stroke-dashoffset: 0;
+        }
+    }
+}
